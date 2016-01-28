@@ -1,4 +1,4 @@
-package com.vitaliy.krasylovets.spyfall;
+package com.vitaliy.krasylovets.spyfall.resources;
 
 /**
  * This class is responsible for describing different
@@ -7,7 +7,7 @@ package com.vitaliy.krasylovets.spyfall;
 public class Profession {
 
     private String name;
-    private boolean isSpy;
+    protected boolean isSpy;
 
     public Profession(String name) {
         this.name = name;
