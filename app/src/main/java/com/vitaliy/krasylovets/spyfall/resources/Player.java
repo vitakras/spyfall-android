@@ -9,7 +9,7 @@ public class Player {
     private Profession profession;
 
     public Player(String name){
-        this.name;
+        this.name = name;
         this.profession = null;
     }
 
