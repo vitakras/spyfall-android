@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Factory for Creating SpyFall Objects
  * Created by vitaliy on 2016-02-08.
  */
 public class SpyFallFactory {
 
-    private static final String LOCATION_ARRAY = "locations";
+    private static final String KEY_LOCATIONS = "locations";
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFESSION = "roles";
+    private static final String KEY_SPY = "spy";
 
     /**
      * Returns a List of a SpyFall Locations
@@ -34,7 +36,7 @@ public class SpyFallFactory {
      * @throws JSONException
      */
     public static List<Location> getLocationList(JSONObject jsonObject) throws JSONException {
-        JSONArray locationJsonArray = jsonObject.getJSONArray(LOCATION_ARRAY);
+        JSONArray locationJsonArray = jsonObject.getJSONArray(KEY_LOCATIONS);
         List<Location> locations = new ArrayList<>
                 (locationJsonArray.length());
 
@@ -45,6 +47,27 @@ public class SpyFallFactory {
         }
 
         return locations;
+    }
+
+    /**
+     * Creates a new Spy Object from a String that Represents a JSON Object
+     * @param spy String representing JSON Object
+     * @return a Spy Object
+     * @throws JSONException
+     */
+    public static SpyProfession getSpy(String spy) throws JSONException {
+        return getSpy(new JSONObject(spy));
+    }
+
+    /**
+     * Creates a new Spy Object from JSON Object
+     * @param spy JSON object representing a spy
+     * @return a Spy Object
+     * @throws JSONException
+     */
+    public static SpyProfession getSpy(JSONObject spy) throws JSONException {
+        String name = spy.getJSONObject(KEY_SPY).getString(KEY_NAME);
+        return new SpyProfession(name);
     }
 
     /**
