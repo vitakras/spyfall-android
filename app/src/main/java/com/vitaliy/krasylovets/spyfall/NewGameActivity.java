@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.vitaliy.krasylovets.spyfall.adapters.LocationAdapter;
@@ -16,6 +19,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class NewGameActivity extends AppCompatActivity {
 
@@ -38,6 +42,23 @@ public class NewGameActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+      // View view = getLayoutInflater().inflate(R.layout.profession_drawer_row, null);
+
+       // ViewGroup viewGroup = (ViewGroup) findViewById(R.id.temp);
+        //ProfessionAdapter test = new ProfessionAdapter(viewGroup.getContext(),locations.get(0).getProfessionList());
+
+     //   for (int i = 0; i < test.getCount();i++){
+       //     viewGroup.addView(test.getView(i,null,viewGroup));
+        //}
+
+        //viewGroup.addView(view);
+
+      //  LinearListLayout temp = new LinearListLayout(viewGroup);
+       // temp.setAdapter(new ProfessionAdapter(viewGroup.getContext(),locations.get(0).getProfessionList()));
+        //viewGroup.
+
+        //Log.d("Test", "onCreate: " + viewGroup.getChildCount());
+        //Log.d("Test", "onCreate2: " + temp.getChildCount());
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.drawerList);
         recyclerView.setAdapter(new LocationAdapter(this, locations));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
