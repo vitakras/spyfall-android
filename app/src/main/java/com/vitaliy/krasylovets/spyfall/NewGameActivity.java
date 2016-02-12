@@ -1,5 +1,7 @@
 package com.vitaliy.krasylovets.spyfall;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.widget.GridView;
 
 import com.vitaliy.krasylovets.spyfall.adapters.LocationAdapter;
 import com.vitaliy.krasylovets.spyfall.adapters.ProfessionAdapter;
+import com.vitaliy.krasylovets.spyfall.fragments.LocationFragment;
 import com.vitaliy.krasylovets.spyfall.resources.Location;
 import com.vitaliy.krasylovets.spyfall.resources.SpyFallFactory;
 
@@ -42,6 +45,14 @@ public class NewGameActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        FragmentManager fm = getFragmentManager();
+        LocationFragment lf = LocationFragment.newInstance(locations);
+
+        FragmentTransaction ft = fm.beginTransaction();
+
+        ft.add(R.id.locationFragment, lf);
+        ft.commit();
+
       // View view = getLayoutInflater().inflate(R.layout.profession_drawer_row, null);
 
        // ViewGroup viewGroup = (ViewGroup) findViewById(R.id.temp);
@@ -59,9 +70,9 @@ public class NewGameActivity extends AppCompatActivity {
 
         //Log.d("Test", "onCreate: " + viewGroup.getChildCount());
         //Log.d("Test", "onCreate2: " + temp.getChildCount());
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.drawerList);
-        recyclerView.setAdapter(new LocationAdapter(this, locations));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+     //   RecyclerView recyclerView = (RecyclerView) findViewById(R.id.drawerList);
+      //  recyclerView.setAdapter(new LocationAdapter(this, locations));
+      //  recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 }
