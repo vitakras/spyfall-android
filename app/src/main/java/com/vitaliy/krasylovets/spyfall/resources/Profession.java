@@ -1,10 +1,12 @@
 package com.vitaliy.krasylovets.spyfall.resources;
 
+import java.io.Serializable;
+
 /**
  * This class is responsible for describing different
  * Created by vitaliy on 2016-01-26.
  */
-public class Profession {
+public class Profession implements Serializable{
 
     private String name;
     protected boolean isSpy;
