@@ -30,6 +30,8 @@ public class LocationFragment extends Fragment {
     // Instance Variables
     private List<Location> locationList = Collections.emptyList();
     private LayoutInflater inflater;
+    private LocationAdapter adapter;
+    private View lastSelectedLocationView;
 
     public static LocationFragment newInstance(List<Location> locationList) {
         LocationFragment fragment = new LocationFragment();
@@ -46,6 +48,26 @@ public class LocationFragment extends Fragment {
         this.locationList = (List<Location>) getArguments().getSerializable(LOCATION_KEY);
         this.inflater = inflater;
 
+        // Configure Adapter
+        this.adapter = new LocationAdapter(inflater.getContext(), this.locationList);
+        this.adapter.setOnItemClickListener(new LocationAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (lastSelectedLocationView != null) {
+                    lastSelectedLocationView.findViewById(R.id.professionList)
+                            .setVisibility(View.GONE);
+                }
+
+                Log.d("Position", "onItemClick: " + position);
+                adapter.setSelectedLocation(position);
+                view.findViewById(R.id.professionList).setVisibility(View.VISIBLE);
+
+
+                lastSelectedLocationView = view;
+            }
+        });
+
+
         return inflater.inflate(R.layout.fragment_location, container, false);
     }
 
@@ -56,7 +78,7 @@ public class LocationFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) getView()
                 .findViewById(R.id.location_recycler_view);
 
-        recyclerView.setAdapter(new LocationAdapter(inflater.getContext(), this.locationList));
+        recyclerView.setAdapter(this.adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
     }

@@ -2,6 +2,7 @@ package com.vitaliy.krasylovets.spyfall.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,10 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         return this.locationList.size();
     }
 
+    public void setSelectedLocation(int selectedLocation) {
+        this.selectedLocation = selectedLocation;
+    }
+
     public void resetSelectedLocation() {
         this.selectedLocation = -1;
     }
@@ -74,6 +79,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             this.context = itemView.getContext();
             this.textView = (TextView) itemView.findViewById(R.id.title);
             this.linearListLayout = new LinearListLayout((ViewGroup) itemView.findViewById(R.id.professionList));
+            itemView.setOnClickListener(this);
         }
 
         public void setLocation(Location location){
@@ -84,6 +90,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
         @Override
         public void onClick(View view) {
+            Log.d("LocationHolder", "onClick: " + "yes");
             if (onItemClickListener != null) {
                 onItemClickListener.onItemClick(view, getAdapterPosition());
             }
