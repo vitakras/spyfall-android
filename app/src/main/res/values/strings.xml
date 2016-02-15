@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SpyFall</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
