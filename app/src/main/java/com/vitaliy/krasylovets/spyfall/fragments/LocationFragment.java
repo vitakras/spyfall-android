@@ -57,11 +57,14 @@ public class LocationFragment extends Fragment {
                     lastSelectedLocationView.findViewById(R.id.professionList)
                             .setVisibility(View.GONE);
                 }
-
-                Log.d("Position", "onItemClick: " + position);
-                adapter.setSelectedLocation(position);
-                view.findViewById(R.id.professionList).setVisibility(View.VISIBLE);
-
+                
+                if (adapter.getSelectedLocation() == position){
+                    adapter.resetSelectedLocation();
+                    view.findViewById(R.id.professionList).setVisibility(View.GONE);
+                } else {
+                    adapter.setSelectedLocation(position);
+                    view.findViewById(R.id.professionList).setVisibility(View.VISIBLE);
+                }
 
                 lastSelectedLocationView = view;
             }

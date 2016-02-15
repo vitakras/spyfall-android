@@ -59,6 +59,10 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         this.selectedLocation = selectedLocation;
     }
 
+    public int getSelectedLocation() {
+        return selectedLocation;
+    }
+
     public void resetSelectedLocation() {
         this.selectedLocation = -1;
     }
