@@ -32,22 +32,22 @@ public class ProfessionAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View gridView;
+        View view;
 
+        // Get View from xml or use existing one
         if (convertView == null) {
-            // get layout from mobile.xml
-            gridView = inflater.inflate(R.layout.profession_drawer_row, null);
-
-            // set value into textview
-            TextView textView = (TextView) gridView
-                    .findViewById(R.id.profession);
-
-            textView.setText(professionList.get(position).getName());
+            view = inflater.inflate(R.layout.profession_drawer_row, null);
         } else {
-            gridView = convertView;
+            view = convertView;
         }
 
-        return gridView;
+        // set value into text view
+        TextView textView = (TextView) view
+                .findViewById(R.id.profession);
+
+        textView.setText(professionList.get(position).getName());
+
+        return view;
     }
 
 
