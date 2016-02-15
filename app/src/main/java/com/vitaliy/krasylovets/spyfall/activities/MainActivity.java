@@ -1,4 +1,4 @@
-package com.vitaliy.krasylovets.spyfall;
+package com.vitaliy.krasylovets.spyfall.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+
+import com.vitaliy.krasylovets.spyfall.NewGameActivity;
+import com.vitaliy.krasylovets.spyfall.R;
 
 /**
  * MainActivity Responsible for Selecting Different game modes,
