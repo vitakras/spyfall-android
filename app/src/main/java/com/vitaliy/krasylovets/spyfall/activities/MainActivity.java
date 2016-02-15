@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.local_play_btn:
-                Intent intent = new Intent(this, NewGameActivity.class);
+                Intent intent = new Intent(this, LocalPlayActivity.class);
                 startActivity(intent);
                 break;
             case R.id.exit_btn:
