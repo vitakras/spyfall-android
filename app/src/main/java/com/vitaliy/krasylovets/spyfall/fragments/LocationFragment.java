@@ -2,23 +2,19 @@ package com.vitaliy.krasylovets.spyfall.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.vitaliy.krasylovets.spyfall.R;
-import com.vitaliy.krasylovets.spyfall.Utils;
 import com.vitaliy.krasylovets.spyfall.adapters.LocationAdapter;
 import com.vitaliy.krasylovets.spyfall.resources.Location;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by vitaliy on 2016-02-11.
@@ -57,7 +53,7 @@ public class LocationFragment extends Fragment {
                     lastSelectedLocationView.findViewById(R.id.professionList)
                             .setVisibility(View.GONE);
                 }
-                
+
                 if (adapter.getSelectedLocation() == position){
                     adapter.resetSelectedLocation();
                     view.findViewById(R.id.professionList).setVisibility(View.GONE);
