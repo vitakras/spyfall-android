@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import com.vitaliy.krasylovets.spyfall.R;
 import com.vitaliy.krasylovets.spyfall.fragments.LocationFragment;
@@ -18,6 +19,9 @@ public class LocalPlayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_play);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("SpyFall");
 
         FragmentManager fm = getFragmentManager();
         NewGameFragment ngf = NewGameFragment.newInstace();
