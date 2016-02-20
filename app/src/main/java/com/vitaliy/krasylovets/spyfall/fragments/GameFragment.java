@@ -3,7 +3,10 @@ package com.vitaliy.krasylovets.spyfall.fragments;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -31,6 +34,10 @@ public class GameFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.inflater = inflater;
+
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         return inflater.inflate(R.layout.fragment_game, container, false);
     }
 
@@ -43,6 +50,12 @@ public class GameFragment extends Fragment {
         initializeCountDownTimer();
 
         countDownTimer.start();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("here11", "onOptionsItemSelected: " + "works");
+        return super.onOptionsItemSelected(item);
     }
 
     private void initializeCountDownTimer() {
