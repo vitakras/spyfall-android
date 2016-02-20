@@ -32,4 +32,15 @@ public class Player {
     public void resetProfession() {
         this.profession = null;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Player: " + this.name + ",");
+        sb.append("Role: " + this.profession.getName() + ",");
+        sb.append("IsSpy: " + (this.profession.isSpy() ? "yes" : "no"));
+
+        return sb.toString();
+    }
 }

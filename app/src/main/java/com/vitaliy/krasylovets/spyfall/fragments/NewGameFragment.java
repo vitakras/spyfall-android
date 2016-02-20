@@ -1,9 +1,8 @@
 package com.vitaliy.krasylovets.spyfall.fragments;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,7 +22,7 @@ import java.util.List;
  * This Fragment is responsible for creating a new Local Game
  * Created by vitaliy on 2016-02-15.
  */
-public class NewGameFragment extends Fragment implements View.OnClickListener{
+public class NewGameFragment extends Fragment implements View.OnClickListener {
 
     // Static Variables
     private static final int MAX_PLAYERS = 8;
@@ -130,6 +129,7 @@ public class NewGameFragment extends Fragment implements View.OnClickListener{
                 }
                 break;
             case R.id.new_game_btn:
+                this.mOnNewGameListener.onNewGame(this.playerList);
                 break;
             default:
                 break;
