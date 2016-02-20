@@ -3,8 +3,10 @@ package com.vitaliy.krasylovets.spyfall.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +55,9 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.inflater = inflater;
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.new_game));
+
         return inflater.inflate(R.layout.fragment_new_game, container, false);
     }
 
@@ -112,8 +117,6 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Log.d("NewGameFragment", "onClick: " + v.getId());
-
         switch (v.getId()) {
             case R.id.add_player_btn:
                 if (this.playerList.size() < MAX_PLAYERS) {

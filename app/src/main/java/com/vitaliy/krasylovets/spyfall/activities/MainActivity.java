@@ -36,11 +36,14 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("SpyFall");
 
+
+        setSupportActionBar(toolbar);
+
         FragmentManager fm = getSupportFragmentManager();
         NewGameFragment ngf = NewGameFragment.newInstance();
 
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.fragment_container, ngf);
+        ft.replace(R.id.fragment_container, ngf);
         ft.commit();
     }
 

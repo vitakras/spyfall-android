@@ -14,7 +14,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/local_play_btn"
-        android:text="@string/local_play"
+        android:text="@string/new_game"
         />
     <Button
         android:layout_width="fill_parent"
