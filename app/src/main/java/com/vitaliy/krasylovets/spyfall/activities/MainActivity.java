@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.vitaliy.krasylovets.spyfall.R;
 import com.vitaliy.krasylovets.spyfall.Utils;
+import com.vitaliy.krasylovets.spyfall.fragments.GameFragment;
 import com.vitaliy.krasylovets.spyfall.fragments.NewGameFragment;
 import com.vitaliy.krasylovets.spyfall.resources.Location;
 import com.vitaliy.krasylovets.spyfall.resources.Player;
@@ -67,5 +68,13 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
         for (Player player : playerList){
             Log.d("Player", "onNewGame: " + player.toString());
         }
+
+        FragmentManager fm = getSupportFragmentManager();
+        GameFragment ngf = GameFragment.newInstance();
+
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container, ngf);
+        ft.commit();
+
     }
 }

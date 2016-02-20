@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Utils Class for random Functions
@@ -29,5 +30,18 @@ public class Utils {
         }
 
         return output.toString();
+    }
+
+    /**
+     * Formats Milliseconds in terms of minutes and seconds left
+     * @param millis
+     * @return
+     */
+    public static String timeFormat(long millis) {
+        return String.format("%d:%d",
+                TimeUnit.MILLISECONDS.toMinutes(millis),
+                TimeUnit.MILLISECONDS.toSeconds(millis) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+        );
     }
 }
