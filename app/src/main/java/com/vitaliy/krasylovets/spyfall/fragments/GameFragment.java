@@ -35,8 +35,8 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.inflater = inflater;
 
-
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActivity().setTitle(R.string.title_play);
 
         return inflater.inflate(R.layout.fragment_game, container, false);
     }
