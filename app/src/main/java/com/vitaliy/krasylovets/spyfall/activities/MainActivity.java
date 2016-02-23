@@ -9,16 +9,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vitaliy.krasylovets.spyfall.R;
+import com.vitaliy.krasylovets.spyfall.fragments.GameFragment;
 import com.vitaliy.krasylovets.spyfall.fragments.NewGameFragment;
-import com.vitaliy.krasylovets.spyfall.fragments.PlayRolesFragment;
+import com.vitaliy.krasylovets.spyfall.fragments.PlayerRolesFragment;
 import com.vitaliy.krasylovets.spyfall.resources.Player;
+import com.vitaliy.krasylovets.spyfall.resources.SpyFall;
 
 import java.util.List;
 
 /**
  * Created by vitaliy on 2016-02-15.
  */
-public class MainActivity extends AppCompatActivity implements NewGameFragment.OnNewGameListener{
+public class MainActivity extends AppCompatActivity implements NewGameFragment.OnNewGameListener,
+    PlayerRolesFragment.OnPlayerRolesListener {
 
     // Instance Variables
     private FragmentManager fragmentManager;
@@ -68,13 +71,27 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
      */
     @Override
     public void onNewGame(List<Player> playerList) {
-        PlayRolesFragment fragment = PlayRolesFragment.newInstance(playerList);
+        PlayerRolesFragment fragment = PlayerRolesFragment.newInstance(playerList);
 
         FragmentTransaction ft = this.fragmentManager.beginTransaction();
         ft.replace(R.id.fragment_container, fragment);
         ft.addToBackStack(null);
         ft.commit();
     }
+
+    /**
+     * PlayerRolesFragment OnPlayerRolesListener
+     * @param spyFall
+     */
+    @Override
+    public void onGameStart(SpyFall spyFall) {
+        GameFragment fragment = GameFragment.newInstance();
+
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
+        ft.replace(R.id.fragment_container, fragment);
+        ft.commit();
+    }
+
 
     /**
      * Checks to see if the FragmentManager stack is empty

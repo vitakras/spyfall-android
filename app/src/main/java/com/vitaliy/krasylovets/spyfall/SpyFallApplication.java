@@ -54,9 +54,10 @@ public class SpyFallApplication extends Application {
         InputStream stream = getResources().openRawResource(R.raw.locations);
 
         try {
-            this.spyfallLocationList = SpyFallFactory.getLocationList(
-                    Utils.readResourceData(stream));
-            this.spyProfession = SpyFallFactory.getSpy(Utils.readResourceData(stream));
+            String data = Utils.readResourceData(stream);
+
+            this.spyfallLocationList = SpyFallFactory.getLocationList(data);
+            this.spyProfession = SpyFallFactory.getSpy(data);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
