@@ -1,9 +1,11 @@
 package com.vitaliy.krasylovets.spyfall.resources;
 
+import java.io.Serializable;
+
 /**
  * Created by vitaliy on 2016-01-27.
  */
-public class Player {
+public class Player implements Serializable{
 
     private String name;
     private Profession profession;

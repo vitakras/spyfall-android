@@ -2,6 +2,7 @@
     <string name="app_name">SpyFall</string>
     <string name="title_new_game">New Game</string>
     <string name="title_play">SpyFall</string>
+    <string name="title_player_roles">Roles</string>
 
     <string name="new_game">New Game</string>
     <string name="exit">Quit</string>
