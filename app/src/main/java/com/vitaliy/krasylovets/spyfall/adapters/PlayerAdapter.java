@@ -27,6 +27,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     private List<Player> playerList = Collections.emptyList();
     private LayoutInflater inflater;
     private int viewType;
+    private OnItemClickListener onItemClickListener;
 
     public PlayerAdapter(Context context, List<Player> playerList, int viewType) {
         this.playerList = playerList;
@@ -66,7 +67,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         return this.viewType;
     }
 
-    public class PlayerViewHolder extends RecyclerView.ViewHolder {
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private EditText editText;
         private Button button;
@@ -88,5 +93,16 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
                 button.setText(player.getName());
             }
         }
+
+        @Override
+        public void onClick(View v) {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(v, getAdapterPosition());
+            }
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
     }
 }
