@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.vitaliy.krasylovets.spyfall.R;
@@ -18,17 +19,35 @@ import java.util.List;
  */
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder> {
 
+    // Global Variables
+    public static final int VIEW_TYPE_DEFAULT = 1;
+    public static final int VIEW_TYPE_ROLES = 2;
+
+    // Instance Variables
     private List<Player> playerList = Collections.emptyList();
     private LayoutInflater inflater;
+    private int viewType;
 
-    public PlayerAdapter(Context context, List<Player> playerList) {
+    public PlayerAdapter(Context context, List<Player> playerList, int viewType) {
         this.playerList = playerList;
         this.inflater = LayoutInflater.from(context);
+        this.viewType = viewType;
+    }
+
+    public PlayerAdapter(Context context, List<Player> playerList) {
+       this(context, playerList, VIEW_TYPE_DEFAULT);
     }
 
     @Override
     public PlayerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.player_drawer_row, parent, false);
+        View view = null;
+
+        if (viewType == VIEW_TYPE_ROLES) {
+            view = inflater.inflate(R.layout.player_role_row, parent, false);
+        } else {
+            view = inflater.inflate(R.layout.player_drawer_row, parent, false);
+        }
+
         return new PlayerViewHolder(view);
     }
 
@@ -42,17 +61,32 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         return this.playerList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return this.viewType;
+    }
+
     public class PlayerViewHolder extends RecyclerView.ViewHolder {
 
         private EditText editText;
+        private Button button;
 
         public PlayerViewHolder(View itemView) {
             super(itemView);
-            editText = (EditText) itemView.findViewById(R.id.player_name);
+
+            if (viewType == VIEW_TYPE_DEFAULT) {
+                editText = (EditText) itemView.findViewById(R.id.player_name);
+            } else if (viewType == VIEW_TYPE_ROLES) {
+                button = (Button) itemView.findViewById(R.id.player_name);
+            }
         }
 
         public void setPlayer(Player player) {
-            editText.setText(player.getName());
+            if (viewType == VIEW_TYPE_DEFAULT) {
+                editText.setText(player.getName());
+            } else if (viewType == VIEW_TYPE_ROLES) {
+                button.setText(player.getName());
+            }
         }
     }
 }
