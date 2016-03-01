@@ -2,6 +2,7 @@ package com.vitaliy.krasylovets.spyfall.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
                 editText = (EditText) itemView.findViewById(R.id.player_name);
             } else if (viewType == VIEW_TYPE_ROLES) {
                 button = (Button) itemView.findViewById(R.id.player_name);
+                button.setOnClickListener(this);
             }
         }
 
