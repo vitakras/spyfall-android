@@ -14,4 +14,12 @@
 
     <!-- Settings Strings -->
     <string name="settings">Settings</string>
+
+    <!-- Roles Screen -->
+    <string name="player_role">Player Role</string>
+    <string name="profession">Profession</string>
+    <string name="location">Location</string>
+
+    <!-- All Buttons -->
+    <string name="ok">ok</string>
 </resources>

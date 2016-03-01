@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.vitaliy.krasylovets.spyfall.SpyFallApplication;
 import com.vitaliy.krasylovets.spyfall.adapters.PlayerAdapter;
 import com.vitaliy.krasylovets.spyfall.resources.Location;
 import com.vitaliy.krasylovets.spyfall.resources.Player;
+import com.vitaliy.krasylovets.spyfall.resources.Profession;
 import com.vitaliy.krasylovets.spyfall.resources.SpyFall;
 import com.vitaliy.krasylovets.spyfall.resources.SpyProfession;
 
@@ -38,6 +40,7 @@ public class PlayerRolesFragment extends Fragment implements View.OnClickListene
     private PlayerAdapter playerAdapter;
     private List<Player> playerList = Collections.emptyList();
     private SpyFall spyFall;
+    private AlertDialog dialog;
 
     public static PlayerRolesFragment newInstance(List<Player> playerList) {
         Bundle bundle = new Bundle();
@@ -78,6 +81,7 @@ public class PlayerRolesFragment extends Fragment implements View.OnClickListene
         super.onActivityCreated(savedInstanceState);
 
         createSpyFallGameInstance();
+        this.spyFall.newGame();
     }
 
     @Override
@@ -87,6 +91,28 @@ public class PlayerRolesFragment extends Fragment implements View.OnClickListene
         // Setup Recycle View
         this.playerAdapter = new PlayerAdapter(inflater.getContext(),
                 this.playerList, PlayerAdapter.VIEW_TYPE_ROLES);
+        this.playerAdapter.setOnItemClickListener(new PlayerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Profession profession = playerList.get(position).getProfession();
+                Location location = spyFall.getLocation();
+
+
+                // Configure Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.player_role);
+
+                builder.setItems(new String[] {
+                        getString(R.string.profession) + ": " + profession.getName(),
+                        getString(R.string.location) + ": "
+                                + (profession.isSpy() ? "???" : location.getName())}, null);
+                builder.setPositiveButton(R.string.ok, null);
+
+                // Create and show Dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
 
         RecyclerView recyclerView = (RecyclerView) getView()
                 .findViewById(R.id.player_recycler_view);
@@ -98,14 +124,10 @@ public class PlayerRolesFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        Log.d("this", "clicked");
-
         if (v.getId() == R.id.start_game_btn){
-            Log.d("NewGame", "onClick: starting game");
             this.mPlayerRolesListener.onGameStart(this.spyFall);
         }
     }
-
 
     /**
      * Created a new SpyFall game Instance
