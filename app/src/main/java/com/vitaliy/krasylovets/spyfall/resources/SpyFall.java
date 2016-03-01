@@ -45,6 +45,14 @@ public class SpyFall {
         }
     }
 
+    public Location getLocation() {
+        if (this.selectedLocation != -1){
+            return this.locationList.get(selectedLocation);
+        }
+
+        return null;
+    }
+
     /**
      * Resets Location and Spy
      */
