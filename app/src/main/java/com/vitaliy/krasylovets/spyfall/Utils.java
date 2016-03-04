@@ -38,7 +38,7 @@ public class Utils {
      * @return
      */
     public static String timeFormat(long millis) {
-        return String.format("%d:%d",
+        return String.format("%02d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes(millis),
                 TimeUnit.MILLISECONDS.toSeconds(millis) -
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
