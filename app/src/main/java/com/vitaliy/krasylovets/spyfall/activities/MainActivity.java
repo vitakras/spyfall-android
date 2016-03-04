@@ -23,6 +23,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NewGameFragment.OnNewGameListener,
     PlayerRolesFragment.OnPlayerRolesListener {
 
+
+    private static final String NEW_GAME_FRAGMENT = "NEW_GAME_FRAGMENT";
+    private static final String ROLES_FRAGMENT = "ROLES_FRAGMENT";
+
     // Instance Variables
     private FragmentManager fragmentManager;
 
@@ -56,9 +60,11 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
         switch(item.getItemId()) {
             case android.R.id.home:
                 if (this.fragmentManager.getBackStackEntryCount() > 0) {
-                    this.fragmentManager.popBackStackImmediate();
-                    backButtonHider();
+                    this.fragmentManager.popBackStack();
+
+                    //backButtonHider();
                 }
+                backButtonHider();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -75,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
 
         FragmentTransaction ft = this.fragmentManager.beginTransaction();
         ft.replace(R.id.fragment_container, fragment);
-        ft.addToBackStack(null);
+        ft.addToBackStack(NEW_GAME_FRAGMENT);
         ft.commit();
     }
 
@@ -89,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
 
         FragmentTransaction ft = this.fragmentManager.beginTransaction();
         ft.replace(R.id.fragment_container, fragment);
+        ft.addToBackStack(ROLES_FRAGMENT);
         ft.commit();
     }
 

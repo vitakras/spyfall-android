@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vitaliy.krasylovets.spyfall.R;
-import com.vitaliy.krasylovets.spyfall.adapters.LocationAdapter;
+import com.vitaliy.krasylovets.spyfall.adapters.LocationRecycleAdapter;
 import com.vitaliy.krasylovets.spyfall.resources.Location;
 
 import java.io.Serializable;
@@ -26,7 +26,7 @@ public class LocationFragment extends Fragment {
     // Instance Variables
     private List<Location> locationList = Collections.emptyList();
     private LayoutInflater inflater;
-    private LocationAdapter adapter;
+    private LocationRecycleAdapter adapter;
     private View lastSelectedLocationView;
 
     public static LocationFragment newInstance(List<Location> locationList) {
@@ -45,8 +45,8 @@ public class LocationFragment extends Fragment {
         this.inflater = inflater;
 
         // Configure Adapter
-        this.adapter = new LocationAdapter(inflater.getContext(), this.locationList);
-        this.adapter.setOnItemClickListener(new LocationAdapter.OnItemClickListener() {
+        this.adapter = new LocationRecycleAdapter(inflater.getContext(), this.locationList);
+        this.adapter.setOnItemClickListener(new LocationRecycleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 if (lastSelectedLocationView != null) {

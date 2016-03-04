@@ -9,10 +9,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.vitaliy.krasylovets.spyfall.R;
+import com.vitaliy.krasylovets.spyfall.SpyFallApplication;
 import com.vitaliy.krasylovets.spyfall.Utils;
+import com.vitaliy.krasylovets.spyfall.adapters.LocationAdapter;
+import com.vitaliy.krasylovets.spyfall.resources.Location;
+
+import java.util.List;
 
 /**
  * This fragment is responsible for displaying the game
@@ -26,6 +32,7 @@ public class GameFragment extends Fragment {
     private LayoutInflater inflater;
     private CountDownTimer countDownTimer;
     private TextView countDownView;
+    private List<Location> locationList;
 
     public static GameFragment newInstance() {
         return new GameFragment();
@@ -44,9 +51,13 @@ public class GameFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        loadLocationList();
 
+        GridView gridView = (GridView) getView().findViewById(R.id.location_grid);
+        gridView.setAdapter(new LocationAdapter(inflater.getContext(),locationList));
+
+        // Sets up the timer
         countDownView = (TextView) getView().findViewById(R.id.countdown_txtView);
-
         initializeCountDownTimer();
 
         countDownTimer.start();
@@ -54,7 +65,6 @@ public class GameFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("here11", "onOptionsItemSelected: " + "works");
         return super.onOptionsItemSelected(item);
     }
 
@@ -70,5 +80,10 @@ public class GameFragment extends Fragment {
 
             }
         };
+    }
+
+    private void loadLocationList() {
+        SpyFallApplication spyFallApplication = (SpyFallApplication) getActivity().getApplication();
+        this.locationList = spyFallApplication.getSpyfallLocationList();
     }
 }
