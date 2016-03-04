@@ -11,4 +11,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Button">
+        <item name="android:color">@color/white</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:translationZ">1dp</item>
+    </style>
 </resources>
