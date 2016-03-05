@@ -50,6 +50,7 @@ public class SpyFallTimer {
         if (paused) {
             this.timer = createCountDownTimer(millisUntilFinished, countDownInterval);
             this.start();
+            this.paused = false;
         }
     }
 
