@@ -1,7 +1,12 @@
 package com.vitaliy.krasylovets.spyfall.fragments;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +21,7 @@ import android.widget.TextView;
 
 import com.vitaliy.krasylovets.spyfall.R;
 import com.vitaliy.krasylovets.spyfall.SpyFallApplication;
+import com.vitaliy.krasylovets.spyfall.TimerService;
 import com.vitaliy.krasylovets.spyfall.Utils;
 import com.vitaliy.krasylovets.spyfall.adapters.LocationAdapter;
 import com.vitaliy.krasylovets.spyfall.resources.Location;
@@ -35,6 +41,8 @@ public class GameFragment extends Fragment {
     private CountDownTimer countDownTimer;
     private TextView countDownView;
     private List<Location> locationList;
+    private TimerService timerService;
+    private boolean serviceBound = false;
 
     public static GameFragment newInstance() {
         return new GameFragment();
@@ -59,11 +67,8 @@ public class GameFragment extends Fragment {
         GridView gridView = (GridView) getView().findViewById(R.id.location_grid);
         gridView.setAdapter(new LocationAdapter(inflater.getContext(),locationList));
 
-        // Sets up the timer
-        countDownView = (TextView) getView().findViewById(R.id.countdown_txtView);
-        initializeCountDownTimer();
-
-        countDownTimer.start();
+        Intent intent = new Intent(getContext(), TimerService.class);
+        getActivity().bindService(intent, this.serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -74,6 +79,20 @@ public class GameFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (this.serviceBound){
+            getActivity().unbindService(this.serviceConnection);
+        }
     }
 
     private void initializeCountDownTimer() {
@@ -94,4 +113,32 @@ public class GameFragment extends Fragment {
         SpyFallApplication spyFallApplication = (SpyFallApplication) getActivity().getApplication();
         this.locationList = spyFallApplication.getSpyfallLocationList();
     }
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            TimerService.LocalBinder binder = (TimerService.LocalBinder) iBinder;
+            timerService = binder.getService();
+            serviceBound = true;
+
+            // configures the timer for the Service
+            CountDownTimer timer = timerService.getCountDownTimer();
+            if (timer == null) {
+                // Sets up the timer
+                countDownView = (TextView) getView().findViewById(R.id.countdown_txtView);
+                initializeCountDownTimer();
+
+                // Sets the timer in the service
+                timerService.setCountDownTimer(countDownTimer);
+                countDownTimer.start();
+            } else {
+                countDownTimer = timer;
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            serviceBound = false;
+        }
+    };
 }

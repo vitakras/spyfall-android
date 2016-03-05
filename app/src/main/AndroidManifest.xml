@@ -3,21 +3,25 @@
     package="com.vitaliy.krasylovets.spyfall">
 
     <application
+        android:name=".SpyFallApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".SpyFallApplication"
         android:theme="@style/MyMaterialTheme">
-
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".TimerService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
