@@ -12,8 +12,10 @@
     <string name="remove_player">Remove Player</string>
     <string name="add_player">Add Player</string>
 
-    <!-- Settings Strings -->
+    <!-- Menu Strings -->
     <string name="settings">Settings</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
 
     <!-- Roles Screen -->
     <string name="player_role">Player Role</string>

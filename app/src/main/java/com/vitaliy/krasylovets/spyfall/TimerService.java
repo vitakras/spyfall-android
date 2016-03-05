@@ -3,10 +3,7 @@ package com.vitaliy.krasylovets.spyfall;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.CountDownTimer;
 import android.os.IBinder;
-
-import com.vitaliy.krasylovets.spyfall.resources.Location;
 
 /**
  * This class is responsible for keeping track of the countdownTimer
@@ -14,7 +11,7 @@ import com.vitaliy.krasylovets.spyfall.resources.Location;
 public class TimerService extends Service {
 
     private final LocalBinder localBinder = new LocalBinder();
-    private CountDownTimer countDownTimer = null;
+    private SpyFallTimer spyFallTimer = null;
 
     public TimerService() {
     }
@@ -24,21 +21,12 @@ public class TimerService extends Service {
         return this.localBinder;
     }
 
-    /**
-     * Returns the Countdown timer used for keeping track of how much time there
-     * is left in the game
-     * @return
-     */
-    public CountDownTimer getCountDownTimer() {
-        return countDownTimer;
+    public SpyFallTimer getSpyFallTimer() {
+        return spyFallTimer;
     }
 
-    /**
-     * Sets the timer to be used by the service that will run in the background
-     * @param countDownTimer
-     */
-    public void setCountDownTimer(CountDownTimer countDownTimer) {
-        this.countDownTimer = countDownTimer;
+    public void setSpyFallTimer(SpyFallTimer spyFallTimer) {
+        this.spyFallTimer = spyFallTimer;
     }
 
     /**

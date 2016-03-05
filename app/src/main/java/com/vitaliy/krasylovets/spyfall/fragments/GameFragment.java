@@ -9,7 +9,6 @@ import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 
 import com.vitaliy.krasylovets.spyfall.R;
 import com.vitaliy.krasylovets.spyfall.SpyFallApplication;
+import com.vitaliy.krasylovets.spyfall.SpyFallTimer;
 import com.vitaliy.krasylovets.spyfall.TimerService;
 import com.vitaliy.krasylovets.spyfall.Utils;
 import com.vitaliy.krasylovets.spyfall.adapters.LocationAdapter;
@@ -34,12 +34,12 @@ import java.util.List;
  */
 public class GameFragment extends Fragment {
 
-    private static final long TIMER_INTERVAL = 1000;
     private static final long TIMER_COUNTDOWN = 1000 * 60 * 8;
 
     private LayoutInflater inflater;
-    private CountDownTimer countDownTimer;
+    private SpyFallTimer spyFallTimer;
     private TextView countDownView;
+    private Menu menu;
     private List<Location> locationList;
     private TimerService timerService;
     private boolean serviceBound = false;
@@ -73,12 +73,29 @@ public class GameFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        this.menu = menu;
         inflater.inflate(R.menu.game_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.pause_btn:
+                MenuItem playBtn = menu.findItem(R.id.play_btn);
+                playBtn.setVisible(true);
+                item.setVisible(false);
+
+                this.spyFallTimer.pause();
+                return true;
+            case R.id.play_btn:
+                MenuItem pauseBtn = menu.findItem(R.id.pause_btn);
+                pauseBtn.setVisible(true);
+                item.setVisible(false);
+                this.spyFallTimer.resume();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -95,8 +112,9 @@ public class GameFragment extends Fragment {
         }
     }
 
-    private void initializeCountDownTimer() {
-        this.countDownTimer = new CountDownTimer(TIMER_COUNTDOWN, TIMER_INTERVAL) {
+    private void initializeSpyFallTimer() {
+        this.spyFallTimer = new SpyFallTimer(TIMER_COUNTDOWN);
+        this.spyFallTimer.setOnTimerListener(new SpyFallTimer.onTimerListener() {
             @Override
             public void onTick(long millisUntilFinished) {
                 countDownView.setText(Utils.timeFormat(millisUntilFinished));
@@ -106,7 +124,7 @@ public class GameFragment extends Fragment {
             public void onFinish() {
 
             }
-        };
+        });
     }
 
     private void loadLocationList() {
@@ -122,17 +140,17 @@ public class GameFragment extends Fragment {
             serviceBound = true;
 
             // configures the timer for the Service
-            CountDownTimer timer = timerService.getCountDownTimer();
+            SpyFallTimer timer = timerService.getSpyFallTimer();
             if (timer == null) {
                 // Sets up the timer
                 countDownView = (TextView) getView().findViewById(R.id.countdown_txtView);
-                initializeCountDownTimer();
+                initializeSpyFallTimer();
 
                 // Sets the timer in the service
-                timerService.setCountDownTimer(countDownTimer);
-                countDownTimer.start();
+                timerService.setSpyFallTimer(spyFallTimer);
+                spyFallTimer.start();
             } else {
-                countDownTimer = timer;
+                spyFallTimer = timer;
             }
         }
 

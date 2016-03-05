@@ -2,9 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/play_pause_btn"
+        android:id="@+id/pause_btn"
         android:title="@string/settings"
         android:icon="@drawable/ic_pause_white_24px"
         app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/play_btn"
+        android:title="@string/play"
+        android:icon="@drawable/ic_play_arrow_white_24px"
+        app:showAsAction="always"
+        android:visible="false"
         />
 </menu>
