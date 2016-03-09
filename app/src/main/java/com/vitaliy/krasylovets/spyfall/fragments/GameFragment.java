@@ -143,6 +143,9 @@ public class GameFragment extends Fragment {
                         spyFallApplication.getNotification());
                 ringtone.play();
 
+                // Called on after the dialog popped up
+                onGameInterface.onTimeIsUp();
+
                 createPlayAgainDialog();
             }
         });
@@ -208,5 +211,7 @@ public class GameFragment extends Fragment {
         void onPlayAgain();
 
         void onGameCancel();
+
+        void onTimeIsUp();
     }
 }

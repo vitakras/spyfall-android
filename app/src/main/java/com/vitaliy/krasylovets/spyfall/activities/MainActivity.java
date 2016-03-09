@@ -1,8 +1,15 @@
 package com.vitaliy.krasylovets.spyfall.activities;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -121,5 +128,25 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
     public void onGameCancel() {
         this.fragmentManager.popBackStack(NEW_GAME_FRAGMENT,
                 FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @Override
+    public void onTimeIsUp() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(R.drawable.ic_help_outline_white_24px); // TODO replace
+        builder.setContentTitle(getText(R.string.app_name));
+        builder.setContentText(getText(R.string.time_is_up));
+
+        Intent notifyIntent = getIntent();
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        builder.setAutoCancel(true);
+        notificationManager.notify(1,builder.build());
     }
 }
