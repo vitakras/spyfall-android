@@ -2,12 +2,13 @@ package com.vitaliy.krasylovets.spyfall.fragments;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,7 +35,7 @@ import java.util.List;
  */
 public class GameFragment extends Fragment {
 
-    private static final long TIMER_COUNTDOWN = 1000 * 60 * 8;
+    private static final long TIMER_COUNTDOWN = 5 * 1000; //1000 * 60 * 8;
 
     private LayoutInflater inflater;
     private SpyFallTimer spyFallTimer;
@@ -43,6 +44,8 @@ public class GameFragment extends Fragment {
     private List<Location> locationList;
     private TimerService timerService;
     private boolean serviceBound = false;
+
+    private OnGameInterface onGameInterface;
 
     public static GameFragment newInstance() {
         return new GameFragment();
@@ -57,6 +60,17 @@ public class GameFragment extends Fragment {
         getActivity().setTitle(R.string.title_play);
 
         return inflater.inflate(R.layout.fragment_game, container, false);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            this.onGameInterface = (OnGameInterface) context;
+        } catch(ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnGameInterface");
+        }
     }
 
     @Override
@@ -122,7 +136,8 @@ public class GameFragment extends Fragment {
 
             @Override
             public void onFinish() {
-
+                countDownView.setText(Utils.timeFormat(0));
+                createPlayAgainDialog();
             }
         });
     }
@@ -159,4 +174,33 @@ public class GameFragment extends Fragment {
             serviceBound = false;
         }
     };
+
+
+    private void createPlayAgainDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(R.string.play_again);
+        builder.setPositiveButton(R.string.yes, new AlertDialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onGameInterface.onPlayAgain();
+            }
+        }).setNegativeButton(R.string.no, new AlertDialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onGameInterface.onGameCancel();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public interface OnGameInterface {
+        /**
+         * this should be called if you want to play again
+         */
+        void onPlayAgain();
+
+        void onGameCancel();
+    }
 }

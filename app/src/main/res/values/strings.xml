@@ -24,4 +24,7 @@
 
     <!-- All Buttons -->
     <string name="ok">ok</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name='play_again'>Do you want to play again?</string>
 </resources>

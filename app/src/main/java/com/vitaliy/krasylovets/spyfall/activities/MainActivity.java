@@ -21,8 +21,7 @@ import java.util.List;
  * Created by vitaliy on 2016-02-15.
  */
 public class MainActivity extends AppCompatActivity implements NewGameFragment.OnNewGameListener,
-    PlayerRolesFragment.OnPlayerRolesListener {
-
+    PlayerRolesFragment.OnPlayerRolesListener, GameFragment.OnGameInterface {
 
     private static final String NEW_GAME_FRAGMENT = "NEW_GAME_FRAGMENT";
     private static final String ROLES_FRAGMENT = "ROLES_FRAGMENT";
@@ -110,5 +109,17 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
         } else {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
+    }
+
+    @Override
+    public void onPlayAgain() {
+        this.fragmentManager.popBackStack(ROLES_FRAGMENT,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @Override
+    public void onGameCancel() {
+        this.fragmentManager.popBackStack(NEW_GAME_FRAGMENT,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }
