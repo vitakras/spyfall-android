@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
@@ -35,9 +38,8 @@ import java.util.List;
  */
 public class GameFragment extends Fragment {
 
-    private static final long TIMER_COUNTDOWN = 5 * 1000; //1000 * 60 * 8;
-
     private LayoutInflater inflater;
+    private SpyFallApplication spyFallApplication;
     private SpyFallTimer spyFallTimer;
     private TextView countDownView;
     private Menu menu;
@@ -126,8 +128,8 @@ public class GameFragment extends Fragment {
         }
     }
 
-    private void initializeSpyFallTimer() {
-        this.spyFallTimer = new SpyFallTimer(TIMER_COUNTDOWN);
+    private void initializeSpyFallTimer(long countdown) {
+        this.spyFallTimer = new SpyFallTimer(countdown);
         this.spyFallTimer.setOnTimerListener(new SpyFallTimer.onTimerListener() {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -137,13 +139,17 @@ public class GameFragment extends Fragment {
             @Override
             public void onFinish() {
                 countDownView.setText(Utils.timeFormat(0));
+                Ringtone ringtone = RingtoneManager.getRingtone(getContext(),
+                        spyFallApplication.getNotification());
+                ringtone.play();
+
                 createPlayAgainDialog();
             }
         });
     }
 
     private void loadLocationList() {
-        SpyFallApplication spyFallApplication = (SpyFallApplication) getActivity().getApplication();
+        this.spyFallApplication = (SpyFallApplication) getActivity().getApplication();
         this.locationList = spyFallApplication.getSpyfallLocationList();
     }
 
@@ -159,7 +165,7 @@ public class GameFragment extends Fragment {
             if (timer == null) {
                 // Sets up the timer
                 countDownView = (TextView) getView().findViewById(R.id.countdown_txtView);
-                initializeSpyFallTimer();
+                initializeSpyFallTimer(spyFallApplication.getCountdownTimer());
 
                 // Sets the timer in the service
                 timerService.setSpyFallTimer(spyFallTimer);
