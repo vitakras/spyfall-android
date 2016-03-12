@@ -3,6 +3,7 @@ package com.vitaliy.krasylovets.spyfall.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -127,7 +128,7 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
     private void initializeOnClickListeners() {
         View view = getView();
 
-        Button newGameBTN = (Button) view.findViewById(R.id.new_game_btn);
+        FloatingActionButton newGameBTN = (FloatingActionButton) view.findViewById(R.id.new_game_btn);
         Button addPlayerBTN = (Button) view.findViewById(R.id.add_player_btn);
         Button removePlayerBTN = (Button) view.findViewById(R.id.remove_player_btn);
 

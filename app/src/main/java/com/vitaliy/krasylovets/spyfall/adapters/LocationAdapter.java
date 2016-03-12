@@ -1,11 +1,13 @@
 package com.vitaliy.krasylovets.spyfall.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.vitaliy.krasylovets.spyfall.R;
 import com.vitaliy.krasylovets.spyfall.resources.Location;
 
 import java.util.Collection;
@@ -17,10 +19,12 @@ import java.util.List;
 public class LocationAdapter extends BaseAdapter {
 
     private Context context;
+    private LayoutInflater inflater;
     private List<Location> locationList;
 
     public LocationAdapter(Context context, List<Location> locationList) {
         this.context = context;
+        this.inflater = LayoutInflater.from(context);
         this.locationList = locationList;
     }
 
@@ -45,7 +49,7 @@ public class LocationAdapter extends BaseAdapter {
         TextView textView = null;
 
         if (view == null) {
-            textView = new TextView(this.context);
+            textView = (TextView) inflater.inflate(R.layout.profession_drawer_row, viewGroup, false);
             textView.setText(this.locationList.get(i).getName());
         }
         else {

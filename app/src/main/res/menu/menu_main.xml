@@ -5,7 +5,7 @@
     <item
         android:id="@+id/rules_btn"
         android:title="@string/settings"
-        android:icon="@drawable/ic_help_outline_white_24px"
+        android:icon="@drawable/help"
         app:showAsAction="always"
         />
     <item
