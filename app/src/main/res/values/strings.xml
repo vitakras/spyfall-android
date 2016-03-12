@@ -28,5 +28,7 @@
     <string name="no">no</string>
     <string name='play_again'>Do you want to play again?</string>
     <string name="time_is_up">Time is up</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

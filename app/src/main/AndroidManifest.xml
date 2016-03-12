@@ -21,7 +21,12 @@
         <service
             android:name=".TimerService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/MyMaterialTheme"></activity>
     </application>
 
 </manifest>
