@@ -1,6 +1,8 @@
 package com.vitaliy.krasylovets.spyfall;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 
@@ -20,12 +22,13 @@ import java.util.List;
  */
 public class SpyFallApplication extends Application {
 
+    private static final String SHARED_PREFERENCE_KEY = "Spyfall_preference_key";
+    private static final String TIMER_KEY = "TIMER_KEY";
     private static final long TIMER_COUNTDOWN = 5 * 1000; //1000 * 60 * 8;
 
     // Instance Variables
     private List<Location> spyfallLocationList;
     private SpyProfession spyProfession;
-    private long countdownTimer = TIMER_COUNTDOWN;
     private Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
     /**
@@ -53,11 +56,26 @@ public class SpyFallApplication extends Application {
     }
 
     public long getCountdownTimer() {
+        SharedPreferences sharedPreferences = getApplicationContext()
+                .getSharedPreferences(SHARED_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        long countdownTimer = sharedPreferences.getLong(TIMER_KEY, TIMER_COUNTDOWN);
         return countdownTimer;
     }
 
+    /**
+     * Sets the Countdown timer of the application and saves it the preferences
+     * @param countdownTimer time in milliseconds
+     */
     public void setCountdownTimer(long countdownTimer) {
-        this.countdownTimer = countdownTimer;
+        Context context = getApplicationContext();
+
+        SharedPreferences sharedPref = context.getSharedPreferences(SHARED_PREFERENCE_KEY,
+                Context.MODE_PRIVATE);
+
+        // Edits the property
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putLong(TIMER_KEY, countdownTimer);
+        editor.commit();
     }
 
     public Uri getNotification() {
