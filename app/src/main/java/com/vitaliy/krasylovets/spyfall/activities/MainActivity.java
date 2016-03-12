@@ -132,21 +132,5 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
 
     @Override
     public void onTimeIsUp() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_help_outline_white_24px); // TODO replace
-        builder.setContentTitle(getText(R.string.app_name));
-        builder.setContentText(getText(R.string.time_is_up));
-
-        Intent notifyIntent = getIntent();
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-                notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        builder.setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        builder.setAutoCancel(true);
-        notificationManager.notify(1,builder.build());
     }
 }
