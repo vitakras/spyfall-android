@@ -1,6 +1,7 @@
 package com.vitaliy.krasylovets.spyfall.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,11 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.vitaliy.krasylovets.spyfall.R;
+import com.vitaliy.krasylovets.spyfall.activities.SettingsActivity;
 import com.vitaliy.krasylovets.spyfall.adapters.PlayerAdapter;
 import com.vitaliy.krasylovets.spyfall.resources.Player;
 
@@ -84,6 +87,20 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
         inflater.inflate(R.menu.menu_main, menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.setting_btn:
+                startSettingsActivity(SettingsActivity.SETTINGS_ID);
+                break;
+            case R.id.rules_btn:
+                startSettingsActivity(SettingsActivity.RULES_ID);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * Initializes the Player List in the fragment
      */
@@ -142,6 +159,12 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    private void startSettingsActivity(int msgType) {
+        Intent intent = new Intent(getContext(), SettingsActivity.class);
+        intent.putExtra(SettingsActivity.EXTRA_MESSAGE, msgType);
+        startActivity(intent);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.vitaliy.krasylovets.spyfall.activities;
+package com.vitaliy.krasylovets.spyfall.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
