@@ -54,6 +54,10 @@ public class SpyFallTimer {
         }
     }
 
+    public void cancel() {
+        this.timer.cancel();
+    }
+
     private CountDownTimer createCountDownTimer(long millisInFuture, long countDownInterval) {
         return new CountDownTimer(millisInFuture, countDownInterval) {
             @Override

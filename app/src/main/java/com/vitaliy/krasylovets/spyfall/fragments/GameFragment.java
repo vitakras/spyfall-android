@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -124,6 +125,7 @@ public class GameFragment extends Fragment {
         super.onDestroy();
 
         if (this.serviceBound){
+            spyFallTimer.cancel();
             getActivity().unbindService(this.serviceConnection);
         }
     }
