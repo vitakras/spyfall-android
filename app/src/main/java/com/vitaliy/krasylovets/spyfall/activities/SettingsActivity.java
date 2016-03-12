@@ -1,12 +1,17 @@
 package com.vitaliy.krasylovets.spyfall.activities;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.vitaliy.krasylovets.spyfall.R;
+import com.vitaliy.krasylovets.spyfall.fragments.RulesFragment;
+import com.vitaliy.krasylovets.spyfall.fragments.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -28,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         int id = getIntent().getIntExtra(EXTRA_MESSAGE, DEFAULT_ID);
 
-        Log.d("Activity id:", "" + id);
+        setFragment(id);
     }
 
     @Override
@@ -39,5 +44,24 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Sets the fragment to start in the Settings activity
+     * @param id
+     */
+    private void setFragment(int id){
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = null;
+
+        if (id == RULES_ID) {
+            fragment = RulesFragment.newInstance();
+        } else {
+            fragment = SettingsFragment.newInstance();
+        }
+
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container, fragment);
+        ft.commit();
     }
 }
