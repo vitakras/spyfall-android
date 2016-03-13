@@ -39,14 +39,25 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         this.fragmentManager = getSupportFragmentManager();
+        this.fragmentManager.addOnBackStackChangedListener(new FragmentManager
+                .OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                } else {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                }
+            }
+        });
+
+
         NewGameFragment newGameFragment = NewGameFragment.newInstance();
 
         // Creates New Game Fragment
         FragmentTransaction ft = this.fragmentManager.beginTransaction();
         ft.replace(R.id.fragment_container, newGameFragment);
         ft.commit();
-
-        backButtonHider();
     }
 
     @Override
@@ -60,10 +71,7 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
             case android.R.id.home:
                 if (this.fragmentManager.getBackStackEntryCount() > 0) {
                     this.fragmentManager.popBackStack();
-
-                    //backButtonHider();
                 }
-                backButtonHider();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -96,19 +104,6 @@ public class MainActivity extends AppCompatActivity implements NewGameFragment.O
         ft.replace(R.id.fragment_container, fragment);
         ft.addToBackStack(ROLES_FRAGMENT);
         ft.commit();
-    }
-
-
-    /**
-     * Checks to see if the FragmentManager stack is empty
-     * hides the home button if its empty
-     */
-    private void backButtonHider() {
-        if (this.fragmentManager.getBackStackEntryCount() > 0) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        } else {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        }
     }
 
     @Override
