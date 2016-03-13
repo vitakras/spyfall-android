@@ -10,6 +10,7 @@
     <color name="colorSecondaryText">#727272</color>
     <color name="colorDivider">#B6B6B6</color>
 
+    <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
     <color name="green">#4caf50</color>
     <color name="red">#f44336</color>
