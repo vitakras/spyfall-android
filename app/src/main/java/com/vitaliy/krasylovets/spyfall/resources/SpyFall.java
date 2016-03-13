@@ -83,9 +83,10 @@ public class SpyFall {
         Collections.shuffle(randomLocations);
 
         // Assigns Professions to unassigned players
-        for(int i = 0; i < this.playerList.size(); i++) {
+        for(int i = 0, j = 0; i < this.playerList.size(); i++) {
             if (i != this.selectedSpy) {
-                this.playerList.get(i).setProfession(randomLocations.get(i));
+                this.playerList.get(i).setProfession(randomLocations.get(j));
+                j++;
             }
         }
 

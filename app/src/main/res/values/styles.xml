@@ -12,7 +12,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Button">
+    <style name="Button" parent="Base.TextAppearance.AppCompat.Button">
         <item name="android:color">@color/white</item>
         <item name="android:minHeight">56dp</item>
         <item name="android:paddingLeft">16dp</item>
@@ -30,4 +30,12 @@
     <style name="MyMaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="MyMaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
+    <style name="FAByes" parent="Widget.Design.FloatingActionButton">
+        <item name="backgroundTint">@color/green</item>
+    </style>
+
+    <style name="FABno" parent="Widget.Design.FloatingActionButton">
+        <item name="backgroundTint">@color/red</item>
+    </style>
 </resources>

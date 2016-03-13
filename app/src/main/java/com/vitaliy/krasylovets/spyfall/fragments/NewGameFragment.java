@@ -129,8 +129,8 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
         View view = getView();
 
         FloatingActionButton newGameBTN = (FloatingActionButton) view.findViewById(R.id.new_game_btn);
-        Button addPlayerBTN = (Button) view.findViewById(R.id.add_player_btn);
-        Button removePlayerBTN = (Button) view.findViewById(R.id.remove_player_btn);
+        FloatingActionButton addPlayerBTN = (FloatingActionButton) view.findViewById(R.id.add_player_btn);
+        FloatingActionButton removePlayerBTN = (FloatingActionButton) view.findViewById(R.id.remove_player_btn);
 
         // Sets On click Listers
         newGameBTN.setOnClickListener(this);
