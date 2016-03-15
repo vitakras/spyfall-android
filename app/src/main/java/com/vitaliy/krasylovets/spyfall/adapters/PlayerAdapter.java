@@ -29,6 +29,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     private LayoutInflater inflater;
     private int viewType;
     private OnItemClickListener onItemClickListener;
+    private OnItemFocusChangeListener onItemFocusChangeListener;
 
     public PlayerAdapter(Context context, List<Player> playerList, int viewType) {
         this.playerList = playerList;
@@ -72,7 +73,12 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         this.onItemClickListener = onItemClickListener;
     }
 
-    public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public void setOnItemFocusChangeListener(OnItemFocusChangeListener onItemFocusChangeListener) {
+        this.onItemFocusChangeListener = onItemFocusChangeListener;
+    }
+
+    public class PlayerViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, View.OnFocusChangeListener {
 
         private EditText editText;
         private Button button;
@@ -82,6 +88,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
             if (viewType == VIEW_TYPE_DEFAULT) {
                 editText = (EditText) itemView.findViewById(R.id.player_name);
+                editText.setOnFocusChangeListener(this);
             } else if (viewType == VIEW_TYPE_ROLES) {
                 button = (Button) itemView.findViewById(R.id.player_name);
                 button.setOnClickListener(this);
@@ -90,7 +97,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
         public void setPlayer(Player player) {
             if (viewType == VIEW_TYPE_DEFAULT) {
-                editText.setText(player.getName());
+                editText.setHint(player.getName());
             } else if (viewType == VIEW_TYPE_ROLES) {
                 button.setText(player.getName());
             }
@@ -102,9 +109,20 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
                 onItemClickListener.onItemClick(v, getAdapterPosition());
             }
         }
+
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if(onItemFocusChangeListener != null) {
+                onItemFocusChangeListener.onItemFocusChange(v, hasFocus, getAdapterPosition());
+            }
+        }
     }
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
+    }
+
+    public interface OnItemFocusChangeListener {
+        void onItemFocusChange (View view, boolean hasFocus, int position);
     }
 }

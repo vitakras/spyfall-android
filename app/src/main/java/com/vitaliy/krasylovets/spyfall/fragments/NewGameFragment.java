@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.vitaliy.krasylovets.spyfall.R;
 import com.vitaliy.krasylovets.spyfall.activities.SettingsActivity;
@@ -75,6 +76,21 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
 
         // Setup Recycle View
         this.playerAdapter = new PlayerAdapter(inflater.getContext(), playerList);
+        this.playerAdapter.setOnItemFocusChangeListener(new PlayerAdapter
+                .OnItemFocusChangeListener() {
+            @Override
+            public void onItemFocusChange(View view, boolean hasFocus, int position) {
+                if(!hasFocus) {
+                    String txt = ((TextView) view).getText().toString();
+                    txt = txt.trim(); // remove blank spaces
+
+                    if (!txt.isEmpty()){
+                        playerList.get(position).setName(txt);
+                    }
+                }
+            }
+        });
+
         RecyclerView recyclerView = (RecyclerView) getView()
                .findViewById(R.id.player_recycler_view);
         recyclerView.setAdapter(this.playerAdapter);
