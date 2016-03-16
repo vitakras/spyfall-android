@@ -92,6 +92,14 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+        this.playerAdapter.setOnItemClickListener(new PlayerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                playerList.remove(position);
+                playerAdapter.notifyItemRemoved(position);
+            }
+        });
+
         RecyclerView recyclerView = (RecyclerView) getView()
                .findViewById(R.id.player_recycler_view);
         recyclerView.setAdapter(this.playerAdapter);

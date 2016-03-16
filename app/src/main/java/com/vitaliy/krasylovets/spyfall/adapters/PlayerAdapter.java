@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.vitaliy.krasylovets.spyfall.R;
 import com.vitaliy.krasylovets.spyfall.resources.Player;
@@ -114,11 +115,15 @@ public class PlayerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             View.OnClickListener, View.OnFocusChangeListener {
 
         private EditText editText = null;
+        private ImageButton imageButton = null;
 
         public AddPlayerViewHolder(View itemView) {
             super(itemView);
             this.editText = ((EditText)itemView.findViewById(R.id.player_name));
             this.editText.setOnFocusChangeListener(this);
+
+            this.imageButton = ((ImageButton)itemView.findViewById(R.id.remove_player_btn));
+            this.imageButton.setOnClickListener(this);
         }
 
         public void setPlayer(Player player) {
