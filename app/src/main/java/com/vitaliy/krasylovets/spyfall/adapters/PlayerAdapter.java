@@ -2,7 +2,6 @@ package com.vitaliy.krasylovets.spyfall.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +17,18 @@ import java.util.List;
 /**
  * Created by vitaliy on 2016-02-15.
  */
-public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder> {
+public class PlayerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // Global Variables
     public static final int VIEW_TYPE_DEFAULT = 1;
-    public static final int VIEW_TYPE_ROLES = 2;
+    public static final int VIEW_TYPE_ADD_PLAYER = 2;
 
     // Instance Variables
     private List<Player> playerList = Collections.emptyList();
     private LayoutInflater inflater;
     private int viewType;
+
+    //Listeners
     private OnItemClickListener onItemClickListener;
     private OnItemFocusChangeListener onItemFocusChangeListener;
 
@@ -42,21 +43,36 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     }
 
     @Override
-    public PlayerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = null;
-
-        if (viewType == VIEW_TYPE_ROLES) {
-            view = inflater.inflate(R.layout.player_role_row, parent, false);
-        } else {
-            view = inflater.inflate(R.layout.player_drawer_row, parent, false);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_ADD_PLAYER:
+                ((AddPlayerViewHolder) holder).setPlayer(this.playerList.get(position));
+                break;
+            case VIEW_TYPE_DEFAULT:
+            default:
+                ((ShowPlayerRoleViewHolder) holder).setPlayer(this.playerList.get(position));
+                break;
         }
-
-        return new PlayerViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(PlayerViewHolder holder, int position) {
-        holder.setPlayer(this.playerList.get(position));
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        RecyclerView.ViewHolder viewHolder;
+
+        switch (viewType) {
+            case VIEW_TYPE_ADD_PLAYER:
+                view = inflater.inflate(R.layout.player_add_row, parent, false);
+                viewHolder = new AddPlayerViewHolder(view);
+                break;
+            case VIEW_TYPE_DEFAULT:
+            default:
+                view = inflater.inflate(R.layout.player_role_row, parent, false);
+                viewHolder = new ShowPlayerRoleViewHolder(view);
+                break;
+        }
+
+        return viewHolder;
     }
 
     @Override
@@ -77,30 +93,36 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         this.onItemFocusChangeListener = onItemFocusChangeListener;
     }
 
-    public class PlayerViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener, View.OnFocusChangeListener {
+    /**
+     * Interface for Setting on Click Listener
+     */
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
 
-        private EditText editText;
-        private Button button;
+    /**
+     * Interface for setting on Item Focus Change
+     */
+    public interface OnItemFocusChangeListener {
+        void onItemFocusChange (View view, boolean hasFocus, int position);
+    }
 
-        public PlayerViewHolder(View itemView) {
+    /**
+     * This View holder is responsible for the AddPlayer Recycle view
+     */
+    public class AddPlayerViewHolder extends RecyclerView.ViewHolder implements
+            View.OnClickListener, View.OnFocusChangeListener {
+
+        private EditText editText = null;
+
+        public AddPlayerViewHolder(View itemView) {
             super(itemView);
-
-            if (viewType == VIEW_TYPE_DEFAULT) {
-                editText = (EditText) itemView.findViewById(R.id.player_name);
-                editText.setOnFocusChangeListener(this);
-            } else if (viewType == VIEW_TYPE_ROLES) {
-                button = (Button) itemView.findViewById(R.id.player_name);
-                button.setOnClickListener(this);
-            }
+            this.editText = ((EditText)itemView.findViewById(R.id.player_name));
+            this.editText.setOnFocusChangeListener(this);
         }
 
         public void setPlayer(Player player) {
-            if (viewType == VIEW_TYPE_DEFAULT) {
-                editText.setHint(player.getName());
-            } else if (viewType == VIEW_TYPE_ROLES) {
-                button.setText(player.getName());
-            }
+            editText.setHint(player.getName());
         }
 
         @Override
@@ -118,11 +140,29 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         }
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
+    /**
+     * Responsible for handling the show Player based on the role
+     */
+    public class ShowPlayerRoleViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
 
-    public interface OnItemFocusChangeListener {
-        void onItemFocusChange (View view, boolean hasFocus, int position);
+        private Button button;
+
+        public ShowPlayerRoleViewHolder(View itemView) {
+            super(itemView);
+            button = (Button) itemView.findViewById(R.id.player_name);
+            button.setOnClickListener(this);
+        }
+
+        public void setPlayer(Player player) {
+            button.setText(player.getName());
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(v, getAdapterPosition());
+            }
+        }
     }
 }

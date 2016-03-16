@@ -75,7 +75,8 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
         }
 
         // Setup Recycle View
-        this.playerAdapter = new PlayerAdapter(inflater.getContext(), playerList);
+        this.playerAdapter = new PlayerAdapter(inflater.getContext(),
+                playerList, PlayerAdapter.VIEW_TYPE_ADD_PLAYER);
         this.playerAdapter.setOnItemFocusChangeListener(new PlayerAdapter
                 .OnItemFocusChangeListener() {
             @Override
