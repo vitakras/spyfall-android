@@ -14,13 +14,12 @@
 
     <EditText
         style="@style/Widget.AppCompat.EditText"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:fontFamily="Roboto Regular"
         android:textSize="16sp"
         android:id="@+id/player_name"
-        android:text="@string/player"
         />
 </LinearLayout>

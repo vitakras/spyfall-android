@@ -41,6 +41,7 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
     private LayoutInflater inflater;
     private PlayerAdapter playerAdapter;
     private OnNewGameListener mOnNewGameListener;
+    private View addPlayerButton;
 
     public static NewGameFragment newInstance() {
         return new NewGameFragment();
@@ -103,6 +104,10 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
                 if (playerList.size() > MIN_PLAYERS) {
                     playerList.remove(position);
                     playerAdapter.notifyItemRemoved(position);
+
+                    if ((playerList.size() < MAX_PLAYERS) && addPlayerButton != null) {
+                        addPlayerButton.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -110,16 +115,16 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
         RecyclerView recyclerView = (RecyclerView) getView()
                .findViewById(R.id.player_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecorator(inflater.getContext(), R.drawable.divider));
         recyclerView.setAdapter(this.playerAdapter);
 
         initializeOnClickListeners();
     }
 
+    /*
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -173,10 +178,16 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_player_btn:
+                addPlayerButton = v;
+
                 if (this.playerList.size() < MAX_PLAYERS) {
                     int newPosition = this.playerList.size();
                     this.playerList.add(createNewPlayer(newPosition + 1));
                     this.playerAdapter.notifyItemInserted(newPosition);
+
+                    if (this.playerList.size() == MAX_PLAYERS) {
+                        v.setVisibility(View.GONE);
+                    }
                 }
                 break;
             case R.id.new_game_btn:
