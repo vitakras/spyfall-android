@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.vitaliy.krasylovets.spyfall.DividerItemDecorator;
 import com.vitaliy.krasylovets.spyfall.R;
 import com.vitaliy.krasylovets.spyfall.activities.SettingsActivity;
 import com.vitaliy.krasylovets.spyfall.adapters.PlayerAdapter;
@@ -102,8 +103,9 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
 
         RecyclerView recyclerView = (RecyclerView) getView()
                .findViewById(R.id.player_recycler_view);
-        recyclerView.setAdapter(this.playerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecorator(inflater.getContext(), R.drawable.divider));
+        recyclerView.setAdapter(this.playerAdapter);
 
         initializeOnClickListeners();
     }
