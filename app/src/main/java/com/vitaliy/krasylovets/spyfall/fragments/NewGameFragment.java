@@ -83,6 +83,10 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemFocusChange(View view, boolean hasFocus, int position) {
                 if(!hasFocus) {
+                    if (position == -1) {
+                        return;
+                    }
+
                     String txt = ((TextView) view).getText().toString();
                     txt = txt.trim(); // remove blank spaces
 
@@ -96,8 +100,10 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
         this.playerAdapter.setOnItemClickListener(new PlayerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                playerList.remove(position);
-                playerAdapter.notifyItemRemoved(position);
+                if (playerList.size() > MIN_PLAYERS) {
+                    playerList.remove(position);
+                    playerAdapter.notifyItemRemoved(position);
+                }
             }
         });
 
@@ -157,12 +163,10 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
 
         FloatingActionButton newGameBTN = (FloatingActionButton) view.findViewById(R.id.new_game_btn);
         FloatingActionButton addPlayerBTN = (FloatingActionButton) view.findViewById(R.id.add_player_btn);
-        FloatingActionButton removePlayerBTN = (FloatingActionButton) view.findViewById(R.id.remove_player_btn);
 
         // Sets On click Listers
         newGameBTN.setOnClickListener(this);
         addPlayerBTN.setOnClickListener(this);
-        removePlayerBTN.setOnClickListener(this);
     }
 
     @Override
@@ -173,12 +177,6 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
                     int newPosition = this.playerList.size();
                     this.playerList.add(createNewPlayer(newPosition + 1));
                     this.playerAdapter.notifyItemInserted(newPosition);
-                }
-                break;
-            case R.id.remove_player_btn:
-                if (this.playerList.size() > MIN_PLAYERS) {
-                    this.playerList.remove(this.playerList.size() - 1);
-                    this.playerAdapter.notifyItemRemoved(this.playerList.size());
                 }
                 break;
             case R.id.new_game_btn:
