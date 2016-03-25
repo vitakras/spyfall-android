@@ -2,6 +2,7 @@ package com.vitaliy.krasylovets.spyfall.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +39,6 @@ public class PlayerRolesFragment extends Fragment implements View.OnClickListene
     private PlayerAdapter playerAdapter;
     private List<Player> playerList = Collections.emptyList();
     private SpyFall spyFall;
-    private AlertDialog dialog;
 
     public static PlayerRolesFragment newInstance(List<Player> playerList) {
         Bundle bundle = new Bundle();
@@ -140,7 +140,8 @@ public class PlayerRolesFragment extends Fragment implements View.OnClickListene
 
     private void setOnClickListeners() {
         View view = getView();
-        Button startGameBTN = (Button) view.findViewById(R.id.start_game_btn);
+        FloatingActionButton startGameBTN = (FloatingActionButton)
+                view.findViewById(R.id.start_game_btn);
         startGameBTN.setOnClickListener(this);
     }
 
