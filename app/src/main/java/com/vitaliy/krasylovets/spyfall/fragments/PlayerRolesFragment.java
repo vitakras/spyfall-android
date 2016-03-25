@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.vitaliy.krasylovets.spyfall.DividerItemDecorator;
 import com.vitaliy.krasylovets.spyfall.R;
 import com.vitaliy.krasylovets.spyfall.SpyFallApplication;
 import com.vitaliy.krasylovets.spyfall.activities.SettingsActivity;
@@ -124,6 +125,7 @@ public class PlayerRolesFragment extends Fragment implements View.OnClickListene
 
         RecyclerView recyclerView = (RecyclerView) getView()
                 .findViewById(R.id.player_recycler_view);
+        recyclerView.addItemDecoration(new DividerItemDecorator(getContext(),R.drawable.divider));
         recyclerView.setAdapter(this.playerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
