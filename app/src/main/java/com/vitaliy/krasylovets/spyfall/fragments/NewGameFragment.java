@@ -64,7 +64,7 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.inflater = inflater;
-        setHasOptionsMenu(true);
+       // setHasOptionsMenu(true);
         getActivity().setTitle(R.string.title_new_game);
 
         return inflater.inflate(R.layout.fragment_new_game, container, false);

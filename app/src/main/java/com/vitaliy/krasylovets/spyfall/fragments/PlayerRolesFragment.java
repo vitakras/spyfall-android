@@ -9,12 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.vitaliy.krasylovets.spyfall.R;
 import com.vitaliy.krasylovets.spyfall.SpyFallApplication;
+import com.vitaliy.krasylovets.spyfall.activities.SettingsActivity;
 import com.vitaliy.krasylovets.spyfall.adapters.PlayerAdapter;
 import com.vitaliy.krasylovets.spyfall.resources.Location;
 import com.vitaliy.krasylovets.spyfall.resources.Player;
@@ -62,8 +66,14 @@ public class PlayerRolesFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_roles, menu);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         this.inflater = inflater;
         this.playerList = (List<Player>) getArguments().getSerializable(PLAYER_KEY);
 
@@ -118,6 +128,27 @@ public class PlayerRolesFragment extends Fragment implements View.OnClickListene
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
         setOnClickListeners();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.refresh_btn:
+                this.spyFall.newGame();
+
+                // Configure Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.assigned_new_roles);
+                builder.setPositiveButton(R.string.ok, null);
+
+                // Create and show Dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
