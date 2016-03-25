@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,6 +43,7 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
     private PlayerAdapter playerAdapter;
     private OnNewGameListener mOnNewGameListener;
     private View addPlayerButton;
+    private View focusedView;
 
     public static NewGameFragment newInstance() {
         return new NewGameFragment();
@@ -83,6 +85,8 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
                 .OnItemFocusChangeListener() {
             @Override
             public void onItemFocusChange(View view, boolean hasFocus, int position) {
+                focusedView = view;
+
                 if(!hasFocus) {
                     if (position == -1) {
                         return;
@@ -102,8 +106,13 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(View view, int position) {
                 if (playerList.size() > MIN_PLAYERS) {
+                    if (focusedView != null) {
+                        focusedView.clearFocus();
+                    }
+
                     playerList.remove(position);
-                    playerAdapter.notifyItemRemoved(position);
+                    playerAdapter.notifyDataSetChanged();
+                    //playerAdapter.notifyItemRemoved(position);
 
                     if ((playerList.size() < MAX_PLAYERS) && addPlayerButton != null) {
                         addPlayerButton.setVisibility(View.VISIBLE);
@@ -147,17 +156,16 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
         playerList = new ArrayList<>(MAX_PLAYERS);
 
         for(int i = 1; i <= MIN_PLAYERS; i++) {
-            playerList.add(createNewPlayer(i));
+            playerList.add(createNewPlayer());
         }
     }
 
     /**
      * Created a new Player based on the Position in the list
-     * @param position
      * @return new Player Object
      */
-    private Player createNewPlayer(int position) {
-        return new Player(getString(R.string.player) + " " + position);
+    private Player createNewPlayer() {
+        return new Player("");
     }
 
     /**
@@ -182,7 +190,7 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
 
                 if (this.playerList.size() < MAX_PLAYERS) {
                     int newPosition = this.playerList.size();
-                    this.playerList.add(createNewPlayer(newPosition + 1));
+                    this.playerList.add(createNewPlayer());
                     this.playerAdapter.notifyItemInserted(newPosition);
 
                     if (this.playerList.size() == MAX_PLAYERS) {
@@ -191,7 +199,23 @@ public class NewGameFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.new_game_btn:
-                this.mOnNewGameListener.onNewGame(this.playerList);
+                if (this.focusedView != null){
+                    this.focusedView.clearFocus();
+                }
+
+                List<Player> players = new ArrayList<>(this.playerList.size());
+
+                for(int i = 0; i < this.playerList.size(); i++) {
+                    Player player = this.playerList.get(i);
+
+                    if (player.getName().isEmpty()) {
+                        players.add(new Player(getString(R.string.player) + " " + (i + 1)));
+                    } else {
+                        players.add(new Player(player.getName()));
+                    }
+                }
+
+                this.mOnNewGameListener.onNewGame(players);
                 break;
             default:
                 break;

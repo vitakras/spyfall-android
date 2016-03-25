@@ -24,7 +24,7 @@ public class SpyFallApplication extends Application {
 
     private static final String SHARED_PREFERENCE_KEY = "Spyfall_preference_key";
     private static final String TIMER_KEY = "TIMER_KEY";
-    private static final long TIMER_COUNTDOWN = 5 * 1000; //1000 * 60 * 8;
+    private static final long TIMER_COUNTDOWN = 1000 * 60 * 8;
 
     // Instance Variables
     private List<Location> spyfallLocationList;

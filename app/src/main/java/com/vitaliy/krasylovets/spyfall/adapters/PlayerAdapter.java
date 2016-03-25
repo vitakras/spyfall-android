@@ -47,7 +47,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_ADD_PLAYER:
-                ((AddPlayerViewHolder) holder).setPlayer(this.playerList.get(position));
+                ((AddPlayerViewHolder) holder).setPlayer(this.playerList.get(position), position);
                 break;
             case VIEW_TYPE_DEFAULT:
             default:
@@ -126,8 +126,19 @@ public class PlayerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.imageButton.setOnClickListener(this);
         }
 
+        public void setPlayer(Player player, int position) {
+            if (player.getName().isEmpty()) {
+                String hint = inflater.getContext().getString(R.string.player)
+                        + " " + (position + 1);
+                this.editText.setHint(hint);
+                this.editText.setText("");
+            } else  {
+                this.editText.setText(player.getName());
+            }
+        }
+
         public void setPlayer(Player player) {
-            editText.setHint(player.getName());
+            editText.setText(player.getName());
         }
 
         @Override
